@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   "org.scalikejdbc"        %% "scalikejdbc-jsr310"           % "2.5.2",
   "org.scalikejdbc"        %% "scalikejdbc-test"             % "2.5.2" % Test,
   "org.scalikejdbc"        %% "scalikejdbc-play-initializer" % "2.6.+",
+  "org.scalikejdbc"        %% "scalikejdbc-syntax-support-macro"% "3.2.3",
   "org.skinny-framework"   %% "skinny-orm"                   % "2.3.7",
   "ch.qos.logback"         % "logback-classic"               % "1.2.3",
   "com.adrianhurt"         %% "play-bootstrap"               % "1.2-P26-B3",
