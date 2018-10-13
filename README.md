@@ -22,5 +22,5 @@ flywayLocationNames = ["common", "mysql"]
 flywayLocations = ["filesystem:conf/db/migration/default/common", "filesystem:conf/db/migration/default/mysql"]
 jdbcDriver = "com.mysql.cj.jdbc.Driver"
 jdbcUrl = "jdbc:mysql://localhost:3306/micro_posts?autoReconnect=true&useSSL=false"
-jdbcUserName = "micro_posts"
-jdbcPassword = "パスワード"
+jdbcUserName = "YourUserName"
+jdbcPassword = "YourPassword"
