@@ -1,7 +1,7 @@
 # ScalaAPI作成
 ### ScalaだけでCRUD機能作成　→　APIサーバに変更する
 
-##ScalaAPI作成操作メモ(TODOあとでwikiか何かに移す)
+## ScalaAPI作成操作メモ(TODOあとでwikiか何かに移す)
 
 作成時のテンプレート
 　sbt new playframework/play-scala-seed.g8
