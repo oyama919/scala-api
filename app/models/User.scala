@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 import scalikejdbc._
 import skinny.orm._
 
-case class User(id: Option[Long] = None, // なんに使うんだっけ
+case class User(id: Option[Long] = None,
                 name: String,
                 email: String,
                 password: String,
