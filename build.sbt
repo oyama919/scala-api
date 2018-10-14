@@ -22,6 +22,7 @@ libraryDependencies ++= Seq(
   "org.skinny-framework"   %% "skinny-orm"                   % "2.3.7",
   "ch.qos.logback"         % "logback-classic"               % "1.2.3",
   "com.adrianhurt"         %% "play-bootstrap"               % "1.2-P26-B3",
+  "com.github.t3hnar" %% "scala-bcrypt" % "3.1",
   "mysql"                  % "mysql-connector-java"          % "6.0.6",
   "org.flywaydb"           %% "flyway-play"                  % "4.0.0"
 )
@@ -38,3 +39,5 @@ flywayDriver := envConfig.value.getString("jdbcDriver")
 flywayUrl := envConfig.value.getString("jdbcUrl")
 flywayUser := envConfig.value.getString("jdbcUserName")
 flywayPassword := envConfig.value.getString("jdbcPassword")
+
+TwirlKeys.templateImports ++= Seq("forms._")
