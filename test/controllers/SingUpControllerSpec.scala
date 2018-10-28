@@ -17,7 +17,7 @@ class SignUpControllerSpec extends FunSpec
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .disable[PlayModule]
-      .overrides(bind[UserService].to[MockUserService]) // 追加
+      .overrides(bind[UserService].to[MockUserService])
       .build()
 
   describe("SingUpController") {
