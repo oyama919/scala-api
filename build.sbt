@@ -24,7 +24,9 @@ libraryDependencies ++= Seq(
   "com.adrianhurt"         %% "play-bootstrap"               % "1.2-P26-B3",
   "com.github.t3hnar" %% "scala-bcrypt" % "3.1",
   "mysql"                  % "mysql-connector-java"          % "6.0.6",
-  "org.flywaydb"           %% "flyway-play"                  % "4.0.0"
+  "org.flywaydb"           %% "flyway-play"                  % "4.0.0",
+  "jp.t2v"                 %% "play2-auth"                   % "0.16.0-SNAPSHOT",
+  "jp.t2v"                 %% "play2-auth-test"              % "0.16.0-SNAPSHOT" % Test,
 )
 
 lazy val envConfig = settingKey[Config]("env-config")

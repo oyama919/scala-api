@@ -1,3 +1,5 @@
+@import b3.vertical.fieldConstructor
+
 @(userOpt: Option[User])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
 
 <header>
@@ -12,16 +14,16 @@
           <span class="icon-bar"></span>
         </button>
         @if(userOpt.isEmpty) {
-        <a class="navbar-brand" href="@routes.HomeController.index()">@Messages("ApplicationName")</a>
+          <a class="navbar-brand" href="@routes.HomeController.index()">@Messages("ApplicationName")</a>
         } else {
-        <a class="navbar-brand" href="#">@Messages("ApplicationName")</a>
+          <a class="navbar-brand" href="#">@Messages("ApplicationName")</a>
         }
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           @if(userOpt.isEmpty) {
             <li><a href="@routes.SignUpController.index()">@Messages("SignUp")</a></li>
-            <li><a href="#">@Messages("LogIn")</a></li>
+            <li><a href="@routes.AuthController.index()">@Messages("LogIn")</a></li>
           } else {
             <li><a href="#">@Messages("Users")</a></li>
             <li class="dropdown">
@@ -31,7 +33,10 @@
                 <li><a href="#">@Messages("User")</a></li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a href="#">@Messages("LogOut")</a>
+                  @b3.formCSRF(routes.AuthController.logout(), 'name -> "logout", 'style -> "display: none") {
+                    @b3.submit() { @Messages("LogOut") }
+                  }
+                  <a href="#" onclick="document.logout.submit();">@Messages("LogOut")</a>
                 </li>
               </ul>
             </li>
