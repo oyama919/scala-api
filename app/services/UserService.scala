@@ -11,4 +11,6 @@ trait UserService {
 
   def findByEmail(email: String)(implicit dbSession: DBSession = AutoSession): Try[Option[User]]
 
+  def findAll(implicit dbSession: DBSession = AutoSession): Try[List[User]]
+
 }
