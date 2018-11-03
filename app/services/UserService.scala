@@ -13,4 +13,6 @@ trait UserService {
 
   def findAll(implicit dbSession: DBSession = AutoSession): Try[List[User]]
 
+  def findById(id: Long)(implicit dbSession: DBSession = AutoSession): Try[Option[User]]
+
 }

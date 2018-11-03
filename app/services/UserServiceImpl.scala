@@ -28,4 +28,8 @@ class UserServiceImpl extends UserService {
     User.findAll()
   }
 
+  override def findById(id: Long)(implicit dbSession: DBSession): Try[Option[User]] = Try {
+    User.findById(id)
+  }
+
 }
