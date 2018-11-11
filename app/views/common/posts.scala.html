@@ -10,8 +10,8 @@
       </div>
       <div class="media-body">
         <div>
-          <a href="@routes.UsersController.show(micropost.userId)">
-            @micropost.user.map(_.name).get</a>
+          <a href="@routes.UsersController.show(micropost.userId, 1)">
+             @micropost.user.map(_.name).get</a>
           <span class="text-muted">posted at @micropost.createAt</span>
         </div>
         <div>
@@ -20,9 +20,9 @@
         @if(currentUser.id.get == micropost.userId) {
           <div>
             @b3.formCSRF(routes.PostController.delete(micropost.id.get)) {
-            @b3.submit('class -> "btn btn-danger btn-xs") {
-            @Messages("Delete")
-            }
+              @b3.submit('class -> "btn btn-danger btn-xs") {
+                @Messages("Delete")
+              }
             }
           </div>
         }
