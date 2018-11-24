@@ -6,7 +6,8 @@ import scalikejdbc._
 import skinny.orm._
 import skinny.orm.feature._
 
-case class UserFollow(id: Option[Long],
+case class UserFollow(
+  id: Option[Long],
   userId: Long,
   followId: Long,
   createAt: ZonedDateTime = ZonedDateTime.now(),
@@ -16,29 +17,29 @@ case class UserFollow(id: Option[Long],
 
 object UserFollow extends SkinnyCRUDMapper[UserFollow] {
 
-  lazy val u1 = User.createAlias("u1")
+  lazy val user = User.createAlias("user")
 
   lazy val userRef = belongsToWithAliasAndFkAndJoinCondition[User](
-    right = User -> u1,
+    right = User -> user,
     fk = "userId",
-    on = sqls.eq(defaultAlias.userId, u1.id),
-    merge = (uf, f) => uf.copy(user = f)
+    on = sqls.eq(defaultAlias.userId, user.id), // DB join
+    merge = (userFollow, getUser) => userFollow.copy(user = getUser) // クラスに取得データをコピー
   )
 
-  lazy val u2 = User.createAlias("u2")
+  lazy val follower = User.createAlias("follower")
 
   lazy val followRef = belongsToWithAliasAndFkAndJoinCondition[User](
-    right = User -> u2,
+    right = User -> follower,
     fk = "followId",
-    on = sqls.eq(defaultAlias.followId, u2.id),
-    merge = (uf, f) => uf.copy(followUser = f)
+    on = sqls.eq(defaultAlias.followId, follower.id),
+    merge = (userFollow, getFollower) => userFollow.copy(followUser = getFollower)
   )
 
   lazy val allAssociations: CRUDFeatureWithId[Long, UserFollow] = joins(userRef, followRef)
 
   override def tableName = "user_follows"
 
-  override def defaultAlias: Alias[UserFollow] = createAlias("uf")
+  override def defaultAlias: Alias[UserFollow] = createAlias("userFollow")
 
   override def extract(rs: WrappedResultSet, n: ResultName[UserFollow]): UserFollow =
     autoConstruct(rs, n, "user", "followUser")
