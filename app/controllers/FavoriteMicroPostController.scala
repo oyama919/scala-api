@@ -19,7 +19,7 @@ class FavoriteMicroPostController @Inject()(val favoriteMicroPostService: Favori
     with AuthConfigSupport
     with AuthenticationElement {
 
-  def create(microPostId: Long): Action[AnyContent] = StackAction { implicit request =>
+  def favorite(microPostId: Long): Action[AnyContent] = StackAction { implicit request =>
     val currentUser = loggedIn
     val now         = ZonedDateTime.now()
     val favoriteMicroPost  = FavoriteMicroPost(None, currentUser.id.get, microPostId, now, now)
@@ -37,7 +37,7 @@ class FavoriteMicroPostController @Inject()(val favoriteMicroPostService: Favori
       .getOrElse(InternalServerError(Messages("InternalError")))
   }
 
-  def delete(microPostId: Long): Action[AnyContent] = StackAction { implicit request =>
+  def unFavorite(microPostId: Long): Action[AnyContent] = StackAction { implicit request =>
     val currentUserId = loggedIn.id.get
     val favoriteMicroPostId = favoriteMicroPostService.findById(microPostId).get.get.id.get
     favoriteMicroPostService

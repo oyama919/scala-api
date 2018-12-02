@@ -12,6 +12,6 @@ POST    /users/:userId/follow       controllers.UserFollowController.follow(user
 POST    /users/:userId/unfollow     controllers.UserFollowController.unFollow(userId: Long)
 POST    /posts                      controllers.PostController.post(page: Int ?= 1)
 POST    /posts/:id/delete           controllers.PostController.delete(id: Long, page: Int ?= 1)
-POST    /posts/:id/favorite         controllers.FavoriteMicroPostController.create(id: Long)
-POST    /posts/:id/unfavorite       controllers.FavoriteMicroPostController.delete(id: Long)
+POST    /posts/:id/favorite         controllers.FavoriteMicroPostController.favorite(id: Long)
+POST    /posts/:id/unfavorite       controllers.FavoriteMicroPostController.unFavorite(id: Long)
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
