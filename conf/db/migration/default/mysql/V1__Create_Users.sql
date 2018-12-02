@@ -7,4 +7,4 @@ CREATE TABLE `users` (
   `update_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE (`email` ASC)
-);
+) ENGINE = InnoDB;

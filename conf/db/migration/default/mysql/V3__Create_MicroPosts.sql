@@ -6,7 +6,7 @@ CREATE TABLE `micro_posts` (
   `update_at` TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
+) ENGINE = InnoDB;
 
 -- user_idで検索するためインデックスを割り当てておく
 CREATE INDEX `micro_posts_user_id_idx` ON `users` (`id`);
