@@ -20,19 +20,19 @@ class UsersController @Inject()(val userService: UserService,
     with I18nSupport
     with AuthConfigSupport
     with AuthenticationElement {
-    def index(page: Int): Action[AnyContent] = StackAction { implicit request =>
-      userService.findAll(Pagination(pageSize = Page.DefaultSize, pageNo = page))
-        .map { users =>
-          Ok(views.html.users.index(loggedIn, users))
+      def index(page: Int): Action[AnyContent] = StackAction { implicit request =>
+        userService.findAll(Pagination(pageSize = Page.DefaultSize, pageNo = page))
+          .map { users =>
+            Ok(views.html.users.index(loggedIn, users))
+          }
+          .recover {
+            case e: Exception =>
+              Logger.error(s"Occurred Error", e)
+              Redirect(routes.UsersController.index())
+                .flashing("failure" -> Messages("Internal Error"))
+          }
+          .getOrElse(InternalServerError(Messages("Internal Error")))
         }
-        .recover {
-          case e: Exception =>
-            Logger.error(s"Occurred Error", e)
-            Redirect(routes.UsersController.index())
-              .flashing("failure" -> Messages("Internal Error"))
-        }
-        .getOrElse(InternalServerError(Messages("Internal Error")))
-      }
 
       def show(userId: Long, page: Int) = StackAction { implicit request =>
         val triedUserOpt        = userService.findById(userId)
