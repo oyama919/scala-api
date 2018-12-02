@@ -1,0 +1,17 @@
+@import b3.vertical.fieldConstructor
+
+@(micropost: MicroPost, favoriteMicroPosts: List[FavoriteMicroPost])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
+
+@if(favoriteMicroPosts.map(fm => fm.microPostId).toSeq.contains(micropost.id.get)) {
+  @b3.formCSRF(routes.FavoriteMicroPostController.delete(micropost.id.get)) {
+    @b3.submit('class -> "btn btn-danger btn-xs") {
+      @Messages("RemoveFavorite")
+    }
+  }
+} else {
+  @b3.formCSRF(routes.FavoriteMicroPostController.create(micropost.id.get)) {
+    @b3.submit('class -> "btn btn-success btn-xs") {
+      @Messages("AddFavorite")
+    }
+  }
+}
