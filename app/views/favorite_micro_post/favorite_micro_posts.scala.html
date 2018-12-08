@@ -1,0 +1,23 @@
+@(favoriteMicroPosts: PagedItems[FavoriteMicroPost])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
+
+<ul class="media-list">
+  @for(favoriteMicroPost <- favoriteMicroPosts.items) {
+    <li class="media">
+      <div class="media-left">
+        <img class="media-object img-rounded" src="@common.gravatarUrl(favoriteMicroPost.user.get.email)?s=50&amp;r=g&amp;d=identicon" alt="">
+      </div>
+      <div class="media-body">
+        <div>
+          <a href="@routes.UsersController.show(favoriteMicroPost.userId, 1)">
+            @favoriteMicroPost.user.map(_.name).get</a>
+          <span class="text-muted">posted at @favoriteMicroPost.microPost.get.createAt</span>
+        </div>
+        <div>
+          <p>@favoriteMicroPost.microPost.get.content</p>
+        </div>
+        @favorite_micro_post.favorite_button(favoriteMicroPost.microPost.get, favoriteMicroPosts.items.toList)
+      </div>
+    </li>
+  }
+</ul>
+@common.pagination(favoriteMicroPosts, routes.UsersController.index)

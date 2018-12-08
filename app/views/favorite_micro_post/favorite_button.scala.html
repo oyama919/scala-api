@@ -3,7 +3,8 @@
 @(micropost: MicroPost, favoriteMicroPosts: List[FavoriteMicroPost])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
 
 @if(favoriteMicroPosts.map(fm => fm.microPostId).toSeq.contains(micropost.id.get)) {
-  @b3.formCSRF(routes.FavoriteMicroPostController.unFavorite(micropost.id.get)) {
+  FavoriteMicroPosts Id : @favoriteMicroPosts.find(fm => fm.microPostId == micropost.id.get).get.id.get
+  @b3.formCSRF(routes.FavoriteMicroPostController.unFavorite(favoriteMicroPosts.find(fm => fm.microPostId == micropost.id.get).get.id.get)) {
     @b3.submit('class -> "btn btn-danger btn-xs") {
       @Messages("RemoveFavorite")
     }

@@ -1,8 +1,7 @@
 package services
 
 import javax.inject.Singleton
-
-import models.{FavoriteMicroPost, MicroPost, PagedItems}
+import models.{FavoriteMicroPost, PagedItems}
 import scalikejdbc._
 import skinny.Pagination
 
@@ -27,19 +26,18 @@ class FavoriteMicroPostServiceImpl extends FavoriteMicroPostService {
     FavoriteMicroPost.where('microPostId -> microPostId).apply().headOption
   }
 
-  override def findMicroPostsByUserId(pagination: Pagination, microPostId: Long)(
+  override def findFavoriteMicroPostsByUserId(pagination: Pagination, userId: Long)(
     implicit dbSession: DBSession = AutoSession
-  ): Try[PagedItems[MicroPost]] = {
-    countByUserId(microPostId).map { size =>
+  ): Try[PagedItems[FavoriteMicroPost]] = {
+    countByUserId(userId).map { size =>
       PagedItems(pagination, size,
         FavoriteMicroPost.allAssociations
           .findAllByWithLimitOffset(
-            sqls.eq(FavoriteMicroPost.defaultAlias.microPostId, microPostId),
+            sqls.eq(FavoriteMicroPost.defaultAlias.userId, userId),
             pagination.limit,
             pagination.offset,
             Seq(FavoriteMicroPost.defaultAlias.id.desc)
           )
-          .map(_.microPost.get)
       )
     }
   }
@@ -48,14 +46,14 @@ class FavoriteMicroPostServiceImpl extends FavoriteMicroPostService {
     FavoriteMicroPost.allAssociations.countBy(sqls.eq(FavoriteMicroPost.defaultAlias.userId, userId))
   }
 
-  override def deleteBy(userId: Long, microPostId: Long)(implicit dbSession: DBSession = AutoSession): Try[Int] = Try {
+  override def deleteBy(userId: Long, favoriteMicroPostId: Long)(implicit dbSession: DBSession = AutoSession): Try[Int] = Try {
     val c     = FavoriteMicroPost.column
-    val count = FavoriteMicroPost.countBy(sqls.eq(c.userId, userId).and.eq(c.microPostId, microPostId))
+    val count = FavoriteMicroPost.countBy(sqls.eq(c.userId, userId).and.eq(c.id, favoriteMicroPostId))
     if (count == 1) {
       FavoriteMicroPost.deleteBy(
         sqls
           .eq(c.userId, userId)
-          .and(sqls.eq(c.microPostId, microPostId))
+          .and(sqls.eq(c.id, favoriteMicroPostId))
       )
     } else 0
   }

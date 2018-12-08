@@ -25,3 +25,4 @@ PasswordInvalid=パスワードと確認用パスワードが一致しません�
 InternalError=内部エラーが発生しました
 AddFavorite=お気に入りへ追加
 RemoveFavorite=お気に入り解除
+FavoriteMicroPostsIndex=お気に入り一覧

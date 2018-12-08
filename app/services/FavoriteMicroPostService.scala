@@ -1,6 +1,6 @@
 package services
 
-import models.{FavoriteMicroPost, MicroPost, PagedItems}
+import models.{FavoriteMicroPost, PagedItems}
 import scalikejdbc.{AutoSession, DBSession}
 import skinny.Pagination
 
@@ -16,9 +16,9 @@ trait FavoriteMicroPostService {
 
   def findByMicroPostId(microPostId: Long)(implicit dbSession: DBSession = AutoSession): Try[Option[FavoriteMicroPost]]
 
-  def findMicroPostsByUserId(pagination: Pagination, microPostId: Long)(
+  def findFavoriteMicroPostsByUserId(pagination: Pagination, microPostId: Long)(
     implicit dbSession: DBSession = AutoSession
-  ): Try[PagedItems[MicroPost]]
+  ): Try[PagedItems[FavoriteMicroPost]]
 
   def countByUserId(userId: Long)(implicit dbSession: DBSession = AutoSession): Try[Long]
 

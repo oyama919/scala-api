@@ -14,6 +14,10 @@ class MicroPostServiceImpl extends MicroPostService {
     MicroPost.create(microPost)
   }
 
+  override def findById(microPostId: Long)(implicit dbSession: DBSession = AutoSession): Try[Option[MicroPost]] = Try {
+    MicroPost.where('id -> microPostId).apply().headOption
+  }
+
   override def deleteById(microPostId: Long)(implicit dbSession: DBSession): Try[Int] = Try {
     MicroPost.deleteById(microPostId)
   }

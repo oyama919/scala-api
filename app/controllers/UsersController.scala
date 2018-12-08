@@ -21,9 +21,11 @@ class UsersController @Inject()(val userService: UserService,
     with AuthConfigSupport
     with AuthenticationElement {
       def index(page: Int): Action[AnyContent] = StackAction { implicit request =>
+        val userOpt: User = loggedIn
+        val favoriteMicroPost = favoriteMicroPostService.findByUserId(userOpt.id.get).get
         userService.findAll(Pagination(pageSize = Page.DefaultSize, pageNo = page))
           .map { users =>
-            Ok(views.html.users.index(loggedIn, users))
+            Ok(views.html.users.index(loggedIn, users, favoriteMicroPost))
           }
           .recover {
             case e: Exception =>
@@ -41,7 +43,7 @@ class UsersController @Inject()(val userService: UserService,
         val triedMicroPosts     = microPostService.findByUserId(pagination, userId)
         val triedFollowingsSize = userFollowService.countByUserId(userId)
         val triedFollowersSize  = userFollowService.countByFollowId(userId)
-        val triedFavoriteMicroPosts  = favoriteMicroPostService.findByUserId(userId)
+        val triedFavoriteMicroPosts  = favoriteMicroPostService.findByUserId(loggedIn.id.get)
         (for {
           userOpt        <- triedUserOpt
           userFollows    <- triedUserFollows
@@ -69,11 +71,13 @@ class UsersController @Inject()(val userService: UserService,
         val triedFollowers       = userFollowService.findFollowersByUserId(pagination, userId)
         val triedMicroPostsSize  = microPostService.countBy(userId)
         val triedFollowingsSize  = userFollowService.countByUserId(userId)
+        val triedFavoriteMicroPosts   = favoriteMicroPostService.findByUserId(loggedIn.id.get)
         (for {
           userFollows    <- triedMaybeUserFollow
           followers      <- triedFollowers
           microPostSize  <- triedMicroPostsSize
           followingsSize <- triedFollowingsSize
+          favoriteMicroPosts <- triedFavoriteMicroPosts
         } yield {
           Ok(
             views.html.users.followings(
@@ -82,7 +86,8 @@ class UsersController @Inject()(val userService: UserService,
               userFollows,
               followers,
               microPostSize,
-              followingsSize
+              followingsSize,
+              favoriteMicroPosts
             )
           )
         }).recover {
@@ -101,11 +106,13 @@ class UsersController @Inject()(val userService: UserService,
         val triedFollowings     = userFollowService.findFollowingsByUserId(pagination, userId)
         val triedMicroPostsSize = microPostService.countBy(userId)
         val triedFollowersSize  = userFollowService.countByFollowId(userId)
+        val triedFavoriteMicroPosts   = favoriteMicroPostService.findByUserId(loggedIn.id.get)
         (for {
           userFollows    <- triedUserFollows
           followings     <- triedFollowings
           microPostsSize <- triedMicroPostsSize
           followersSize  <- triedFollowersSize
+          favoriteMicroPosts <- triedFavoriteMicroPosts
         } yield {
           Ok(
             views.html.users.followings(
@@ -114,7 +121,8 @@ class UsersController @Inject()(val userService: UserService,
               userFollows,
               followings,
               microPostsSize,
-              followersSize
+              followersSize,
+              favoriteMicroPosts
             )
           )
         }).recover {

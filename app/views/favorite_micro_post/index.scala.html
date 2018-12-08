@@ -1,0 +1,5 @@
+@(currentUserOpt: Option[User], favoriteMicroPosts: PagedItems[FavoriteMicroPost])(implicit messagesProvider: MessagesProvider, flash: Flash, request: RequestHeader)
+
+@main(Messages("Users"), currentUserOpt) {
+  @views.html.favorite_micro_post.favorite_micro_posts(favoriteMicroPosts)
+}

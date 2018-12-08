@@ -1,4 +1,4 @@
-@(currentUser: User, users: PagedItems[User])(implicit messagesProvider: MessagesProvider, flash: Flash, request: RequestHeader)
+@(currentUser: User, users: PagedItems[User], favoriteMicroPosts: List[FavoriteMicroPost])(implicit messagesProvider: MessagesProvider, flash: Flash, request: RequestHeader)
 
 <ul class="media-list">
   @for(otherUser <- users.items) {

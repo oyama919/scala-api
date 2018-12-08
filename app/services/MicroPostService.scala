@@ -10,6 +10,8 @@ trait MicroPostService {
 
   def create(microPost: MicroPost)(implicit dbSession: DBSession = AutoSession): Try[Long]
 
+  def findById(microPostId: Long)(implicit dbSession: DBSession = AutoSession): Try[Option[MicroPost]]
+
   def deleteById(microPostId: Long)(implicit dbSession: DBSession = AutoSession): Try[Int]
 
   def findByUserId(pagination: Pagination, userId: Long)(

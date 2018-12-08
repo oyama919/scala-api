@@ -25,3 +25,4 @@ PasswordInvalid=Mismatch Password with Password(Confirm)
 InternalError=Occurred internal error
 AddFavorite=Add Favorite
 RemoveFavorite=Remove Favorite
+FavoriteMicroPostsIndex=Favorite MicroPosts
